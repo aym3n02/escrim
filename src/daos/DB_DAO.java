@@ -1,6 +1,10 @@
 package daos;
 
-import java.sql.*;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+
 
 import db.*;
 

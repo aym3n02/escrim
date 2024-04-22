@@ -7,8 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.Drug;
-
 public class DrugDB_Manager {
 
     private java.sql.Connection connection;
@@ -18,8 +16,24 @@ public class DrugDB_Manager {
         this.connection = connection;
     }
 
-    public List<Drug> getDrugList() {
-        return null;
+    public List<List<Object>> getDrugList() {
+        List<List<Object>> drugList = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT id, name, quantity, expirationDate, temperature FROM Drugs");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                List<Object> drugInfo = new ArrayList<>();
+                drugInfo.add(rs.getInt("id"));
+                drugInfo.add(rs.getString("name"));
+                drugInfo.add(rs.getInt("quantity"));
+                drugInfo.add(rs.getString("expirationDate"));
+                drugInfo.add(rs.getDouble("temperature"));
+                drugList.add(drugInfo);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return drugList;
     }
 
     public void addDrug(String name, int quantity, String expirationDate, double temperature) {
@@ -142,5 +156,4 @@ public class DrugDB_Manager {
         }
         return drugThresholds;
     }
-
 }

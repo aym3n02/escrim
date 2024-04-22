@@ -19,7 +19,18 @@ public class ToolDB_DAO {
     }
 
     public List<Tool> getToolList() {
-        return manager.getToolList();
+        List<Tool> toolList = new ArrayList<>();
+        List<List<Object>> toolListAsList = manager.getToolList(); // Utilizing the getToolListAsList() method
+
+        for (List<Object> toolInfo : toolListAsList) {
+            int id = (int) toolInfo.get(0);
+            String name = (String) toolInfo.get(1);
+            int quantity = (int) toolInfo.get(2);
+
+            Tool tool = new Tool(id, name, quantity);
+            toolList.add(tool);
+        }
+        return toolList;
     }
 
     public void addTool(Tool tool) {
@@ -43,7 +54,7 @@ public class ToolDB_DAO {
 
     }
 
-    public List<String> getToolsUnderThreshold() {
+    public List<List<Object>> getToolsUnderThreshold() {
         return manager.getToolsUnderThreshold();
     }
 

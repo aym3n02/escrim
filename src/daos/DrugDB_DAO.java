@@ -21,7 +21,20 @@ public class DrugDB_DAO {
     }
 
     public List<Drug> getDrugList() {
-        return manager.getDrugList();
+        List<Drug> drugList = new ArrayList<>();
+        List<List<Object>> drugListAsList = manager.getDrugList();
+
+        for (List<Object> drugInfo : drugListAsList) {
+            int id = (int) drugInfo.get(0);
+            String name = (String) drugInfo.get(1);
+            int quantity = (int) drugInfo.get(2);
+            String expirationDate = (String) drugInfo.get(3);
+            double temperature = (double) drugInfo.get(4);
+
+            Drug drug = new Drug(id, name, quantity, expirationDate, temperature);
+            drugList.add(drug);
+        }
+        return drugList;
     }
 
     public void addDrug(Drug med)  {
@@ -31,7 +44,6 @@ public class DrugDB_DAO {
 
     public void removeDrug(int id, int quantity) {
         manager.removeDrug(id, quantity);
-
         historyManager.writeDrugAction(DrugActions.Removal,"Retrait d'une quantité de "+quantity+" du médicament d'ID: "+id+".");
     }
 
@@ -45,10 +57,10 @@ public class DrugDB_DAO {
     }
 
     /**
-     * @return retourne une liste des noms des médicaments sous seuil
+     * @return Liste 2D des couples des noms des médicaments avec leurs seuils correspondants
      */
     public List<List<Object>> getDrugsUnderThreshold() {
-        return manager.getDrugsUnderThreshold();
+        return manager.getDrugsThreshold();
     }
 
 }

@@ -1,9 +1,7 @@
-import daos.DB_DAO;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import daos.DB_DAO;
 
 public class SimpleWindow extends Application {
 
@@ -27,7 +25,6 @@ public class SimpleWindow extends Application {
 
     public static void main(String[] args) {
         // Launch the JavaFX application
-        DB_DAO bd = new DB_DAO();
         launch(args);
     }
 }
